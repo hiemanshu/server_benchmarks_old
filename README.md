@@ -11,7 +11,8 @@ Framework | Requests/Min | Average Latency
 [Iris](https://github.com/kataras/iris) |  86856 | 1.69 ms
 [Plug](https://github.com/elixir-lang/plug) | 14918 | 11.83 ms
 [Plug](https://github.com/elixir-lang/plug) - without Logger | 41210 | 9.31 ms
-[Zewo](https://github.com/Zewo/Zewo) | 4031 | 88.98 ms
+[Vapor](https://github.com/qutheory/vapor) | 8196 | 18.42 ms
+[Zewo](https://github.com/Zewo/Zewo) | 4948 | 31.02 ms
 
 ## Command to benchmark
     wrk -t4 -c150 -d30s http://localhost:PORT/path
