@@ -16,7 +16,7 @@ cabal-version:       >=1.10
 executable warp-hello-world-exe
   hs-source-dirs:      app
   main-is:             Main.hs
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  ghc-options:         -threaded -O -optc-O3 -funfolding-use-threshold=16 -rtsopts -with-rtsopts=-N -with-rtsopts=-H6G -with-rtsopts=-A4m
   build-depends:       base
                      , warp
                      , wai
@@ -28,7 +28,7 @@ test-suite warp-hello-world-test
   hs-source-dirs:      test
   main-is:             Spec.hs
   build-depends:       base
-  ghc-options:         -threaded -O2 -optc-O3 -funfolding-use-threshold-16 -rtsopts -with-rtsopts="-N -H6G"
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -with-rtsopts=-H6G -with-rtsopts=-A4m
   default-language:    Haskell2010
 
 source-repository head
