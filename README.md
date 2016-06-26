@@ -7,8 +7,8 @@ Standard Mid 2014 MacBook Pro. i7 2.2Ghz, 16GB RAM, 256GB SSD.
 Framework | Requests/Sec | Average Latency
 ----|---|----
 [Iris](https://github.com/kataras/iris)  | 86856 |  1.69 ms
+[Warp](https://hackage.haskell.org/package/warp-3.2.6)  | 77656 |  1.90ms
 [Gin](https://github.com/gin-gonic/gin) - without Logger  | 65341 |  2.29 ms
-[Warp](https://hackage.haskell.org/package/warp-3.2.6)  | 56998 |  2.59ms
 [Plug](https://github.com/elixir-lang/plug) - without Logger  | 41210 |  9.31 ms
 [Gin](https://github.com/gin-gonic/gin)  | 29388 |  10.77 ms
 [Plug](https://github.com/elixir-lang/plug)  | 14918 |  11.83 ms
