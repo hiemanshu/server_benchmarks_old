@@ -7,7 +7,7 @@ Standard Mid 2014 MacBook Pro. i7 2.2Ghz, 16GB RAM, 256GB SSD.
 Framework | Requests/Sec | Average Latency
 ----|---|----
 [Express](https://github.com/expressjs/express) | 10118 | 14.60 ms
-[Falcon](https://github.com/falconry/falcon) | 543 | 47.06
+[Falcon](https://github.com/falconry/falcon) | 543 | 47.06 ms
 [Flask](https://github.com/pallets/flask) | 544 | 74.15 ms
 [Flask + Tornado](https://github.com/tornadoweb/tornado) | 1805 | 81.79 ms
 [Gin](https://github.com/gin-gonic/gin) | 29388 | 10.77 ms
