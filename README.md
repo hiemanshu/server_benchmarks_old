@@ -11,3 +11,5 @@ Framework | Requests/Min | Average Latency
 [Plug](https://github.com/elixir-lang/plug) | 41210 | 9.31 ms
 [Zewo](https://github.com/Zewo/Zewo) | 4031 | 88.98 ms
 
+## Command to benchmark
+    wrk -t4 -c150 -d30s http://localhost:PORT/path
