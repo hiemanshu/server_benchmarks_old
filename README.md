@@ -7,8 +7,10 @@ Standard Mid 2014 MacBook Pro. i7 2.2Ghz, 16GB RAM, 256GB SSD.
 Framework | Requests/Min | Average Latency
 ----|---|----
 [Gin](https://github.com/gin-gonic/gin) | 29388 | 10.77 ms
+[Gin](https://github.com/gin-gonic/gin) - without Logger | 65341 | 2.29 ms
 [Iris](https://github.com/kataras/iris) |  86856 | 1.69 ms
-[Plug](https://github.com/elixir-lang/plug) | 41210 | 9.31 ms
+[Plug](https://github.com/elixir-lang/plug) | 14918 | 11.83 ms
+[Plug](https://github.com/elixir-lang/plug) - without Logger | 41210 | 9.31 ms
 [Zewo](https://github.com/Zewo/Zewo) | 4031 | 88.98 ms
 
 ## Command to benchmark
