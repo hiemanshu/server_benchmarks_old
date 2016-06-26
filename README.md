@@ -17,7 +17,7 @@ Framework | Requests/Sec | Average Latency
 [Plug](https://github.com/elixir-lang/plug) - without Logger | 41210 | 9.31 ms
 [Sinatra](https://github.com/sinatra/sinatra) | 974 | 203.71 ms
 [Vapor](https://github.com/qutheory/vapor) | 8196 | 18.42 ms
-[Wai](https://github.com/yesodweb/wai) | 56998 | 2.59ms
+[Warp](https://hackage.haskell.org/package/warp-3.2.6) | 56998 | 2.59ms
 [Zewo](https://github.com/Zewo/Zewo) | 4948 | 31.02 ms
 
 ## Command to benchmark
