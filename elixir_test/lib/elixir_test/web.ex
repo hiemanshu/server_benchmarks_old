@@ -2,7 +2,6 @@ defmodule ElixirTest.Web do
   use Plug.Router
   require Logger
 
-  plug Plug.Logger
   plug :match
   plug :dispatch
 
