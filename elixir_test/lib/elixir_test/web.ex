@@ -14,7 +14,7 @@ defmodule ElixirTest.Web do
     {:ok, _} = Plug.Adapters.Cowboy.http ElixirTest.Web, []
   end
 
-  get "/" do
+  get "/hello" do
     conn
     |> send_resp(200, "Hello, World!")
     |> halt
