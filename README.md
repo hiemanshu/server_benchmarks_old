@@ -27,3 +27,16 @@ Framework | Requests/Sec | Average Latency
 
 ## Command to benchmark
     wrk -t4 -c150 -d30s http://localhost:PORT/path
+
+
+## Contributing :
+
+If you want to add more frameworks or find a better or doing feel free to send a PR my way.
+
+The current structure is as follow:
+
+- `/hello` returns a simple "Hello, World!" message
+- `/fortunes` returns a rendered html with all the fortune cookie messages
+- `/fortunes.json` returns JSON with all the fortune cookie messages
+
+You can find the schema for the fortunes table in `database/fortunes.sql`. All tests will use postgresql as the database.
