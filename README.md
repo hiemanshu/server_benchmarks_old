@@ -4,6 +4,8 @@
 Standard Mid 2014 MacBook Pro. i7 2.2Ghz, 16GB RAM, 256GB SSD.
 
 ## Benchmarks:
+
+### Simple no template return (/hello)
 Framework | Requests/Sec | Average Latency
 ----|---|----
 [Iris](https://github.com/kataras/iris)  | 86856 |  1.69 ms
