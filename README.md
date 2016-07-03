@@ -18,6 +18,7 @@ Framework | Requests/Sec | Average Latency
 [Flask + Tornado](https://github.com/tornadoweb/tornado)  | 1805 |  81.79 ms
 [Sinatra](https://github.com/sinatra/sinatra)  | 974 |  203.71 ms
 [Bottle](https://github.com/bottlepy/bottle) | 546 | 1.38ms
+[Kitura](https://github.com/IBM-Swift/Kitura) | 545 | 321.45 us
 [Flask](https://github.com/pallets/flask)  | 544 |  74.15 ms
 [Falcon](https://github.com/falconry/falcon)  | 543 |  47.06 ms
 
