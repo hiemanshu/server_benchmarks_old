@@ -19,11 +19,20 @@ Framework | Requests/Sec | Average Latency
 [Zewo](https://github.com/Zewo/Zewo)  | 4948 |  31.02 ms
 [Flask + Tornado](https://github.com/tornadoweb/tornado)  | 1805 |  81.79 ms
 [Sinatra](https://github.com/sinatra/sinatra)  | 974 |  203.71 ms
-[Bottle](https://github.com/bottlepy/bottle) | 546 | 1.38ms
-[Kitura](https://github.com/IBM-Swift/Kitura) | 545 | 321.45 us
+[Bottle](https://github.com/bottlepy/bottle) | 546 |  1.38ms
+[Kitura](https://github.com/IBM-Swift/Kitura) | 545 |  321.45 us
 [Flask](https://github.com/pallets/flask)  | 544 |  74.15 ms
 [Falcon](https://github.com/falconry/falcon)  | 543 |  47.06 ms
 
+### Fortunes (/fortunes)
+Framework | Requests/Sec | Average Latency
+----|---|----
+[Sinatra](https://github.com/sinatra/sinatra)  | 430 |  260.90 ms
+
+### Fortunes.json (/fortunes.json)
+Framework | Requests/Sec | Average Latency
+----|---|----
+[Sinatra](https://github.com/sinatra/sinatra)  | 588 |  197.96 ms
 
 ## Command to benchmark
     wrk -t4 -c150 -d30s http://localhost:PORT/path

@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <title>Fortune Cookie Messages</title>
+  </head>
+  <body>
+    <table>
+      <% @fortunes.each do |fortune| %>
+        <tr>
+          <td><%= fortune[:id] %></td>
+          <td><%== fortune[:message] %></td>
+        </tr>
+      <% end %>
+    </table>
+  </body>
+</html>
