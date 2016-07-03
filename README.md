@@ -27,11 +27,13 @@ Framework | Requests/Sec | Average Latency
 ### Fortunes (/fortunes)
 Framework | Requests/Sec | Average Latency
 ----|---|----
+[Gin](https://github.com/gin-gonic/gin)  | 3340  |  61.20 ms
 [Sinatra](https://github.com/sinatra/sinatra)  | 430 |  260.90 ms
 
 ### Fortunes.json (/fortunes.json)
 Framework | Requests/Sec | Average Latency
 ----|---|----
+[Gin](https://github.com/gin-gonic/gin)  | 3222 |  56.63 ms
 [Sinatra](https://github.com/sinatra/sinatra)  | 588 |  197.96 ms
 
 ## Command to benchmark
