@@ -21,6 +21,13 @@ executable warp-hello-world-exe
                      , warp
                      , wai
                      , http-types
+                     , lucid
+                     , hasql
+                     , hasql-pool
+                     , transformers
+                     , text
+                     , aeson
+                     , containers
   default-language:    Haskell2010
 
 test-suite warp-hello-world-test
