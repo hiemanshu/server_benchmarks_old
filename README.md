@@ -8,8 +8,8 @@ Standard Mid 2014 MacBook Pro. i7 2.2Ghz, 16GB RAM, 256GB SSD.
 ### Simple no template return (/hello)
 Framework | Requests/Sec | Average Latency
 ----|---|----
+[Warp](https://hackage.haskell.org/package/warp-3.2.6)  | 102147 |  1.46 ms
 [Iris](https://github.com/kataras/iris)  | 86856 |  1.69 ms
-[Warp](https://hackage.haskell.org/package/warp-3.2.6)  | 77656 |  1.90ms
 [Gin](https://github.com/gin-gonic/gin) - without Logger  | 65341 |  2.29 ms
 [Plug](https://github.com/elixir-lang/plug) - without Logger  | 41210 |  9.31 ms
 [Gin](https://github.com/gin-gonic/gin)  | 29388 |  10.77 ms
@@ -27,12 +27,14 @@ Framework | Requests/Sec | Average Latency
 ### Fortunes (/fortunes)
 Framework | Requests/Sec | Average Latency
 ----|---|----
+[Warp](https://hackage.haskell.org/package/warp-3.2.6)  | 10217 |  14.60 ms
 [Gin](https://github.com/gin-gonic/gin)  | 3340  |  61.20 ms
 [Sinatra](https://github.com/sinatra/sinatra)  | 430 |  260.90 ms
 
 ### Fortunes.json (/fortunes.json)
 Framework | Requests/Sec | Average Latency
 ----|---|----
+[Warp](https://hackage.haskell.org/package/warp-3.2.6)  | 13255 | 11.14 ms
 [Gin](https://github.com/gin-gonic/gin)  | 3222 |  56.63 ms
 [Sinatra](https://github.com/sinatra/sinatra)  | 588 |  197.96 ms
 
