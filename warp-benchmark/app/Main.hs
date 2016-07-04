@@ -5,7 +5,8 @@ module Main (main) where
 import Control.Exception
 import Control.Monad.IO.Class
 import Data.Aeson hiding (json)
-import Data.Text hiding (map)
+import Data.ByteString
+import Data.Text.Encoding
 import Data.Int
 import Data.Sequence
 import Lucid
@@ -14,7 +15,7 @@ import Hasql.Connection (settings)
 import Hasql.Pool (acquire, release, use)
 import Hasql.Query
 import Hasql.Session (query)
-import Hasql.Decoders (rowsList, value, text, int4)
+import Hasql.Decoders (rowsList, value, bytea, int4)
 import Hasql.Encoders (unit)
 import Network.Wai (responseLBS, rawPathInfo, Application)
 import Network.Wai.Handler.Warp (run)
@@ -29,11 +30,14 @@ passwd = ""
 db = "server_benchmarks"
 poolSettings = (8, 1, pgSettings)
 
-data Fortune = Fortune { mid :: !Int32 , msg :: Text }
+data Fortune = Fortune { mid :: !Int32 , msg :: ByteString }
   deriving (Show, Generic)
 
 instance ToJSON Fortune where
   toEncoding = genericToEncoding defaultOptions
+
+instance ToJSON ByteString where
+  toJSON bs = toJSON (decodeUtf8 bs)
 
 main = do
   bracket (acquire poolSettings) release $ \pool->
@@ -50,20 +54,20 @@ fortuneQuery = statement q encoder decoder True
   where
    q = "SELECT * FROM fortunes"
    encoder = unit
-   decoder = rowsList $ Fortune <$> value int4 <*> value text
+   decoder = rowsList $ Fortune <$> value int4 <*> value bytea
 
 fortunesHTML respond pool = do
   (Right messages) <- liftIO $ use pool (query () fortuneQuery)
-  respond $ responseLBS status200 [(hContentType, "text/html")] (constructResp messages)
+  respond $ responseLBS status200 [(hContentType, "text/html; charset=utf-8")] (constructResp messages)
   where
     constructResp messages = renderBS $ doctypehtml_ $
       do
         head_ (title_ "Fortune Cookie Messages")
         body_ (table_ (do mapM extract messages))
     extract fortune = tr_ (do td_ (toHtml (show (mid fortune)))
-                              td_ (toHtml (msg fortune))) :: Html()
+                              td_ (toHtml (decodeUtf8 (msg fortune)))) :: Html()
 
 fortunesJSON respond pool = do
   (Right messages) <- liftIO $ use pool (query () fortuneQuery)
-  respond $ responseLBS status200 [(hContentType, "application/json")]
+  respond $ responseLBS status200 [(hContentType, "application/json; charset=utf-8")]
     (encode (fromList messages))

@@ -25,6 +25,7 @@ executable warp-hello-world-exe
                      , hasql
                      , hasql-pool
                      , transformers
+                     , bytestring
                      , text
                      , aeson
                      , containers
