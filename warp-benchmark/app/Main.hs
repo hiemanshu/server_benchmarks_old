@@ -1,37 +1,51 @@
-{-# LANGUAGE OverloadedStrings, DeriveGeneric #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DeriveGeneric #-}
 
 module Main (main) where
 
-import Control.Exception
-import Control.Monad.IO.Class
-import Data.Aeson hiding (json)
-import Data.ByteString
-import Data.Text.Encoding
-import Data.Int
-import Data.Sequence
-import Lucid
-import GHC.Generics
+import Control.Concurrent (runInUnboundThread)
+import Control.Exception (bracket)
+import Control.Monad.IO.Class (liftIO)
+import Data.Aeson
+       (ToJSON, encode, toEncoding, toJSON, genericToEncoding,
+        defaultOptions)
+import Data.ByteString (ByteString)
+import Data.Text.Encoding (decodeUtf8)
+import Data.Int (Int32)
+import Data.Vector as V (Vector, mapM)
+import GHC.Generics (Generic)
 import Hasql.Connection (settings)
-import Hasql.Pool (acquire, release, use)
-import Hasql.Query
+import Hasql.Pool (Pool, acquire, release, use)
+import Hasql.Query (Query, statement)
 import Hasql.Session (query)
-import Hasql.Decoders (rowsList, value, bytea, int4)
+import Hasql.Decoders (bytea, int4, rowsVector, value)
 import Hasql.Encoders (unit)
-import Network.Wai (responseLBS, rawPathInfo, Application)
+import Lucid
+       (Html, renderBS, doctypehtml_, head_, body_, title_, table_,
+        toHtml, tr_, td_)
+import Network.Wai (Application, rawPathInfo, responseLBS)
 import Network.Wai.Handler.Warp (run)
 import Network.HTTP.Types (status200, status404)
 import Network.HTTP.Types.Header (hContentType)
 
 pgSettings = settings host port user passwd db
-host = "localhost"
-port = 5432
-user = "postgres"
-passwd = ""
-db = "server_benchmarks"
-poolSettings = (8, 1, pgSettings)
 
-data Fortune = Fortune { mid :: !Int32 , msg :: ByteString }
-  deriving (Show, Generic)
+host = "localhost"
+
+port = 5432
+
+user = "postgres"
+
+passwd = ""
+
+db = "server_benchmarks"
+
+poolSettings = (8,1,pgSettings)
+
+data Fortune =
+  Fortune {mid :: !Int32
+          ,msg :: ByteString}
+  deriving (Show,Generic)
 
 instance ToJSON Fortune where
   toEncoding = genericToEncoding defaultOptions
@@ -39,35 +53,49 @@ instance ToJSON Fortune where
 instance ToJSON ByteString where
   toJSON bs = toJSON (decodeUtf8 bs)
 
-main = do
-  bracket (acquire poolSettings) release $ \pool->
-    run 3000 (app pool)
+main :: IO ()
+main = 
+  runInUnboundThread $
+  bracket (acquire poolSettings)
+          release
+          (\pool -> run 3000 (app pool))
 
-app pool req respond = case rawPathInfo req of
-  "/hello" -> respond $ responseLBS status200 [(hContentType, "text/plain")] "Hello world!"
-  "/fortunes" -> fortunesHTML respond pool
-  "/fortunes.json" -> fortunesJSON respond pool
-  _ -> respond $ responseLBS status404 [] ""
+app :: Pool -> Application
+app pool req respond = 
+  case rawPathInfo req of
+    "/hello" -> 
+      respond $
+      responseLBS status200
+                  [(hContentType,"text/plain")]
+                  "Hello world!"
+    "/fortunes" -> fortunesHTML pool respond
+    "/fortunes.json" -> fortunesJSON pool respond
+    _ -> respond $ responseLBS status404 [] ""
 
-fortuneQuery :: Query () [Fortune]
-fortuneQuery = statement q encoder decoder True
-  where
-   q = "SELECT * FROM fortunes"
-   encoder = unit
-   decoder = rowsList $ Fortune <$> value int4 <*> value bytea
+fortuneQuery :: Query () (Vector Fortune)
+fortuneQuery = statement query encoder decoder True
+  where query = "SELECT * FROM fortunes"
+        encoder = unit
+        decoder = rowsVector $ Fortune <$> value int4 <*> value bytea
 
-fortunesHTML respond pool = do
-  (Right messages) <- liftIO $ use pool (query () fortuneQuery)
-  respond $ responseLBS status200 [(hContentType, "text/html; charset=utf-8")] (constructResp messages)
-  where
-    constructResp messages = renderBS $ doctypehtml_ $
-      do
-        head_ (title_ "Fortune Cookie Messages")
-        body_ (table_ (do mapM extract messages))
-    extract fortune = tr_ (do td_ (toHtml (show (mid fortune)))
-                              td_ (toHtml (decodeUtf8 (msg fortune)))) :: Html()
+fortunesHTML pool respond = 
+  do (Right fortunes) <- liftIO $ use pool (query () fortuneQuery)
+     respond $
+       responseLBS status200
+                   [(hContentType,"text/html; charset=utf-8")]
+                   (constructResp fortunes)
+  where constructResp fortunes = 
+          renderBS $
+          doctypehtml_ $
+          do head_ $ title_ "Fortune Cookie Messages"
+             body_ $ table_ $ V.mapM present fortunes
+        present fortune = 
+          tr_ (do td_ . toHtml . show $ mid fortune
+                  td_ . toHtml . decodeUtf8 $ msg fortune) :: Html ()
 
-fortunesJSON respond pool = do
-  (Right messages) <- liftIO $ use pool (query () fortuneQuery)
-  respond $ responseLBS status200 [(hContentType, "application/json; charset=utf-8")]
-    (encode (fromList messages))
+fortunesJSON pool respond = 
+  do (Right fortunes) <- liftIO $ use pool (query () fortuneQuery)
+     respond $
+       responseLBS status200
+                   [(hContentType,"application/json; charset=utf-8")]
+                   (encode fortunes)
