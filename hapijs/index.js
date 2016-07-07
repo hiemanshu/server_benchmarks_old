@@ -8,6 +8,7 @@ const Options = {
 
 Glue.compose(Manifest, Options, (err, server) => {
     if ( err ) throw err;
+
     server.start((err) => {
         if ( err ) throw err;
         console.info('server running at ' + server.info.uri);
