@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <title>Fortune Cookie Messages</title>
+  </head>
+  <body>
+    <table>
+      {{#each fortunes}}
+      <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.message}}</td>
+      </tr>
+      {{/each}}
+    </table>
+  </body>
+</html>

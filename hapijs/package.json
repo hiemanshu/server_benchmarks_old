@@ -1,0 +1,20 @@
+{
+  "name": "hapi-example",
+  "version": "1.0.0",
+  "description": "a sample hapi server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Saravjeet 'Aman' Singh",
+  "license": "MIT",
+  "dependencies": {
+    "glue": "^3.3.0",
+    "handlebars": "^4.0.5",
+    "hapi": "^13.5.0",
+    "hapi-node-postgres": "^3.0.2",
+    "pg": "^4.5.6",
+    "vision": "^4.1.0",
+    "visionary": "^6.0.0"
+  }
+}
