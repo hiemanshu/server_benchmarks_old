@@ -12,5 +12,10 @@ stack build
 
 ## Running
 ```
-stack exec warp-hello-world-exe
+stack exec warp
+```
+
+## Benchmarks
+```
+stack test
 ```

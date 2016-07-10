@@ -13,10 +13,8 @@ build-type:          Simple
 -- extra-source-files:
 cabal-version:       >=1.10
 
-executable warp-hello-world-exe
-  hs-source-dirs:      app
-  main-is:             Main.hs
-  ghc-options:         -threaded -O2 -optc-O3 -funfolding-use-threshold=512 -fexpose-all-unfoldings -rtsopts -with-rtsopts=-N -with-rtsopts=-H6G -with-rtsopts=-A4m
+library
+  hs-source-dirs:      src
   build-depends:       base
                      , warp
                      , wai
@@ -29,14 +27,36 @@ executable warp-hello-world-exe
                      , text
                      , aeson
                      , vector
+                     , weigh
+                     , either
+  exposed-modules:     WarpBench
+
+executable warp
+  hs-source-dirs:      app
+  main-is:             Main.hs
+  ghc-options:         -threaded -O2 -optc-O3 -funfolding-use-threshold=512 -fexpose-all-unfoldings -rtsopts -with-rtsopts=-N -with-rtsopts=-H6G -with-rtsopts=-A4m
+  build-depends:       base
+                     , hasql
+                     , hasql-pool
+                     , wai
+                     , warp
+                     , warp-hello-world
   default-language:    Haskell2010
 
-test-suite warp-hello-world-test
+test-suite bench
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
   build-depends:       base
-  ghc-options:         -threaded -rtsopts -with-rtsopts=-N -with-rtsopts=-H6G -with-rtsopts=-A4m
+                     , aeson
+                     , warp-hello-world
+                     , weigh
+                     , criterion
+                     , hasql
+                     , hasql-pool
+                     , deepseq
+                     , either
+  ghc-options:         -threaded -fno-full-laziness -rtsopts -with-rtsopts=-N -with-rtsopts=-H6G -with-rtsopts=-A4m
   default-language:    Haskell2010
 
 source-repository head
