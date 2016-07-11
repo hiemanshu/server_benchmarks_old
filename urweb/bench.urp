@@ -1,0 +1,10 @@
+library meta
+database dbname=server_benchmarks user=postgres host=localhost
+rewrite all Bench/*
+allow mime application/json
+allow mime text/plain
+noMangleSql
+html5
+
+$/list
+bench
